@@ -72,7 +72,7 @@ type SkuList struct {
 
 func (app *App) JdUnionOpenOrderQuery(params map[string]interface{}) (result *JdUnionOpenOrderQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.order.query", map[string]interface{}{"orderReq": params})
+	body, err := app.Request("jd.union.open.order.query", "1.0", map[string]interface{}{"orderReq": params})
 	resp := &JdUnionOpenOrderQueryResponseTopLevel{}
 	if err != nil {
 		log.Println(string(body))

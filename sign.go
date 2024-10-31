@@ -12,7 +12,7 @@ import (
 func GetSign(clientSecret string, p map[string]interface{}) string {
 	var keys []string
 	for k := range p {
-		if k != "sign" && k != "access_token" {
+		if k != "sign" {
 			keys = append(keys, k)
 		}
 	}

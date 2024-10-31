@@ -7,12 +7,12 @@ import (
 )
 
 var app = &App{
-	ID:     "xxxxx",
-	Key:    "xxxxx",
-	Secret: "xxxxx",
+	ID:     "",
+	Key:    "",
+	Secret: "",
 }
 
-//获取商品类目
+// 获取商品类目
 func TestOpenCategoryGoodsGet(t *testing.T) {
 	res, err := app.JdUnionOpenCategoryGoodsGet(map[string]interface{}{
 		"parentId": 0,
@@ -21,7 +21,7 @@ func TestOpenCategoryGoodsGet(t *testing.T) {
 	log.Println(res, err)
 }
 
-//获取活动列表
+// 获取活动列表
 func TestOpenActivityQuery(t *testing.T) {
 	res, err := app.JdUnionOpenActivityQuery(map[string]interface{}{
 		"pageIndex":  1,
@@ -65,7 +65,7 @@ func TestOpenGoodsQuery(t *testing.T) {
 	log.Println(res, err)
 }
 
-//获取单品信息
+// 获取单品信息
 func TestOpenGoodsPromotionGoodsInfoQuery(t *testing.T) {
 	res, err := app.JdUnionOpenGoodsPromotiongoodsinfoQuery(map[string]interface{}{
 		"skuIds": "30881878056",
@@ -73,7 +73,7 @@ func TestOpenGoodsPromotionGoodsInfoQuery(t *testing.T) {
 	log.Println(res, err)
 }
 
-//获取通用推广链接
+// 获取通用推广链接
 func TestOpenPromotionCommonGet(t *testing.T) {
 	res, err := app.JdUnionOpenPromotionCommonGet(map[string]interface{}{
 		"subUnionId": "test_subunionid",
@@ -86,7 +86,7 @@ func TestOpenPromotionCommonGet(t *testing.T) {
 	log.Println(res, err)
 }
 
-//获取商品订单
+// 获取商品订单
 func TestOpenOrderQuery(t *testing.T) {
 
 	//单品查询
@@ -101,7 +101,7 @@ func TestOpenOrderQuery(t *testing.T) {
 }
 
 // 通过subUnionid获取推广链接
-//https://wqitem.jd.com/item/view?sku=
+// https://wqitem.jd.com/item/view?sku=
 func TestOpenPromotionBySubUnionIdGet(t *testing.T) {
 	skuId := 43415523405
 	res, err := app.JdUnionOpenPromotionBysubunionidGet(map[string]interface{}{
@@ -112,4 +112,37 @@ func TestOpenPromotionBySubUnionIdGet(t *testing.T) {
 		"couponUrl":  "http://coupon.jd.com/ilink/couponSendFront/send_index.action?key=02d2b6ff587c42fda6d4cac7ff1c2d6a&roleId=20498843&to=mall.jd.com/index-821028.html",
 	})
 	log.Println(res, err)
+}
+
+// 查询渠道下订单行信息
+// https://jos.jd.com/apilistnewdetail?apiGroupId461&apiId=20843
+func TestOpenOrangeOrderQuery(t *testing.T) {
+
+	pageIndex := 1
+	for {
+		res, err := app.JdOpenOrangeOrderQuery("550e9937a52249769bbe1f901db90d26ztk5",
+			map[string]interface{}{
+				"type":      1, //1 下单时间
+				"startTime": "2024-10-30 00:00:00",
+				"endTime":   "2024-10-31 00:00:00",
+				"pageIndex": pageIndex,
+				"pageSize":  500,
+			})
+		if err != nil {
+			log.Println(res, err)
+			break
+		}
+		if len(res.Result) == 0 {
+			break
+		}
+		for _, item := range res.Result {
+			if item.ReBuyDayW30 != "0" {
+				log.Println(item.OrderID)
+			} else if item.ReBuyMonth1 != "0" {
+				log.Println(item.OrderID)
+			}
+		}
+		pageIndex++
+	}
+
 }

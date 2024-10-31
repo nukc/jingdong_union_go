@@ -50,7 +50,7 @@ type GoodsInfo struct {
 
 func (app *App) JdUnionOpenGoodsPromotiongoodsinfoQuery(params map[string]interface{}) (result *JdUnionOpenGoodsPromotiongoodsinfoQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.goods.promotiongoodsinfo.query", params)
+	body, err := app.Request("jd.union.open.goods.promotiongoodsinfo.query", "1.0", params)
 	resp := &JdUnionOpenGoodsPromotiongoodsinfoQueryTopLevel{}
 	if err != nil {
 		log.Println(string(body))

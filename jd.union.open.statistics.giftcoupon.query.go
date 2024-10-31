@@ -53,7 +53,7 @@ type CouponEffectData struct {
 
 func (app *App) JdUnionOpenStatisticsGiftcouponQuery(params map[string]interface{}) (result *JdUnionOpenStatisticsGiftcouponQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.statistics.giftcoupon.query", map[string]interface{}{"effectDataReq": params})
+	body, err := app.Request("jd.union.open.statistics.giftcoupon.query", "1.0", map[string]interface{}{"effectDataReq": params})
 	log.Println(string(body))
 	resp := &JdUnionOpenStatisticsGiftcouponQueryTopLevel{}
 	if err != nil {

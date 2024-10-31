@@ -3,7 +3,7 @@ package jingdong_union_go
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -33,15 +33,19 @@ type ErrorResponse struct {
 const RouterURL = "https://api.jd.com/routerjson"
 const RequestMethod = "POST"
 
-func (app *App) Request(method string, paramJSON map[string]interface{}) ([]byte, error) {
+func (app *App) Request(method string, v string, paramJSON map[string]interface{}) ([]byte, error) {
 	// common params
 	params := map[string]interface{}{}
 	params["method"] = method
 	params["app_key"] = app.Key
 	params["format"] = "json"
-	params["v"] = "1.0"
+	params["v"] = v
 	params["sign_method"] = "md5"
 	params["timestamp"] = time.Now().Format("2006-01-02 15:04:05")
+	if paramJSON["access_token"] != nil {
+		params["access_token"] = paramJSON["access_token"]
+		delete(paramJSON, "access_token")
+	}
 
 	// api params
 	paramJSONStr, _ := json.Marshal(paramJSON)
@@ -54,8 +58,8 @@ func (app *App) Request(method string, paramJSON map[string]interface{}) ([]byte
 		return nil, err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	log.Printf("Responce Body:%v ", string(body))
+	body, err := io.ReadAll(resp.Body)
+	//log.Printf("Responce Body:%v ", string(body))
 	if err != nil {
 		return nil, err
 	}

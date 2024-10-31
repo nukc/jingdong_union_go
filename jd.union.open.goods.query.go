@@ -200,7 +200,7 @@ type ShopInfo struct {
 
 func (app *App) JdUnionOpenGoodsQuery(params map[string]interface{}) (result *JdUnionOpenGoodsQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.goods.query", map[string]interface{}{"goodsReqDTO": params})
+	body, err := app.Request("jd.union.open.goods.query", "1.0", map[string]interface{}{"goodsReqDTO": params})
 	resp := &JdUnionOpenGoodsQueryResponseTopLevel{}
 	if err != nil {
 		log.Println(string(body))

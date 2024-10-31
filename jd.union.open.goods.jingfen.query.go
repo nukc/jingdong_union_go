@@ -17,7 +17,7 @@ type JdUnionOpenGoodsJingfenQueryResponse struct {
 
 func (app *App) JdUnionOpenGoodsJingfenQuery(params map[string]interface{}) (result *JdUnionOpenGoodsQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.goods.jingfen.query", map[string]interface{}{"goodsReq": params})
+	body, err := app.Request("jd.union.open.goods.jingfen.query", "1.0", map[string]interface{}{"goodsReq": params})
 	resp := &JdUnionOpenGoodsJingfenQueryTopLevel{}
 	if err != nil {
 		log.Println(string(body))
