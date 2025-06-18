@@ -41,7 +41,7 @@ type RedPacketEffectDataResp struct {
 // JdUnionOpenStatisticsRedpacketQuery 京享红包效果数据
 func (app *App) JdUnionOpenStatisticsRedpacketQuery(params map[string]interface{}) (result *JdUnionOpenStatisticsRedpacketQueryQueryResult, err error) {
 
-	body, err := app.Request("jd.union.open.statistics.redpacket.query", "2.0", map[string]interface{}{"effectDataReq": params})
+	body, err := app.Request("jd.union.open.statistics.redpacket.query", "1.0", map[string]interface{}{"effectDataReq": params})
 
 	resp := &JdUnionOpenStatisticsRedpacketQueryResponse{}
 	if err != nil {

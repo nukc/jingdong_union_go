@@ -38,7 +38,7 @@ type ResultList struct {
 // JdUnionOpenPositionCreate 创建推广位
 func (app *App) JdUnionOpenPositionCreate(params map[string]interface{}) (result *JdUnionOpenPositionCreateResult, err error) {
 
-	body, err := app.Request("jd.union.open.statistics.redpacket.query", "2.0", map[string]interface{}{"effectDataReq": params})
+	body, err := app.Request("jd.union.open.statistics.redpacket.query", "1.0", map[string]interface{}{"effectDataReq": params})
 
 	resp := &JdUnionOpenPositionCreateResponse{}
 	if err != nil {
