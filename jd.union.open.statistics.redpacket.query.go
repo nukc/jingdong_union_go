@@ -2,6 +2,7 @@ package jingdong_union_go
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 )
 
@@ -10,7 +11,8 @@ type JdUnionOpenStatisticsRedpacketQueryResponse struct {
 }
 
 type JdUnionOpenStatisticsRedpacketQueryResponce struct {
-	QueryResult JdUnionOpenStatisticsRedpacketQueryQueryResult `json:"queryResult"`
+	Code        string `json:"code"`
+	QueryResult string `json:"queryResult"`
 }
 
 type JdUnionOpenStatisticsRedpacketQueryQueryResult struct {
@@ -53,7 +55,15 @@ func (app *App) JdUnionOpenStatisticsRedpacketQuery(params map[string]interface{
 		return
 	}
 
-	result = &resp.JdUnionOpenStatisticsRedpacketQueryResponce.QueryResult
+	if resp.JdUnionOpenStatisticsRedpacketQueryResponce.QueryResult != "" {
+		result = &JdUnionOpenStatisticsRedpacketQueryQueryResult{}
+		if err = json.Unmarshal([]byte(resp.JdUnionOpenStatisticsRedpacketQueryResponce.QueryResult), result); err != nil {
+			return
+		}
+
+	} else {
+		err = errors.New("result is null")
+	}
 
 	return
 }

@@ -2,6 +2,7 @@ package jingdong_union_go
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 )
 
@@ -10,7 +11,8 @@ type JdUnionOpenPositionCreateResponse struct {
 }
 
 type JdUnionOpenPositionCreateResponce struct {
-	CreateResult JdUnionOpenPositionCreateResult `json:"createResult"`
+	Code         string `json:"code"`
+	CreateResult string `json:"createResult"`
 }
 
 type JdUnionOpenPositionCreateResult struct {
@@ -50,7 +52,15 @@ func (app *App) JdUnionOpenPositionCreate(params map[string]interface{}) (result
 		return
 	}
 
-	result = &resp.JdUnionOpenPositionCreateResponce.CreateResult
+	if resp.JdUnionOpenPositionCreateResponce.CreateResult != "" {
+		result = &JdUnionOpenPositionCreateResult{}
+		if err = json.Unmarshal([]byte(resp.JdUnionOpenPositionCreateResponce.CreateResult), result); err != nil {
+			return
+		}
+
+	} else {
+		err = errors.New("result is null")
+	}
 
 	return
 }
