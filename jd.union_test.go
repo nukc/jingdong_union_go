@@ -146,3 +146,33 @@ func TestOpenOrangeOrderQuery(t *testing.T) {
 	}
 
 }
+
+func TestOpenStatisticsRedpacketQuery(t *testing.T) {
+	result, err := app.JdUnionOpenStatisticsRedpacketQuery(map[string]interface{}{
+		"startDate": "2025-06-18",
+		"endDate":   "2025-06-18",
+		"pageIndex": 1,
+		"pageSize":  100,
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+}
+
+func TestOpenPositionCreate(t *testing.T) {
+	result, err := app.JdUnionOpenPositionCreate(map[string]interface{}{
+		"unionId":       "",
+		"key":           "",
+		"unionType":     4,
+		"type":          6,
+		"spaceNameList": []string{"test"},
+		"siteId":        0,
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+}
