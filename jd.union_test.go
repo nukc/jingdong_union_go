@@ -120,7 +120,7 @@ func TestOpenOrangeOrderQuery(t *testing.T) {
 
 	pageIndex := 1
 	for {
-		res, err := app.JdOpenOrangeOrderQuery("550e9937a52249769bbe1f901db90d26ztk5",
+		res, err := app.JdOpenOrangeOrderQuery("",
 			map[string]interface{}{
 				"type":      1, //1 下单时间
 				"startTime": "2024-10-30 00:00:00",
@@ -169,6 +169,19 @@ func TestOpenPositionCreate(t *testing.T) {
 		"type":          6,
 		"spaceNameList": []string{"test"},
 		"siteId":        0,
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+}
+
+func TestJdUnionOpenShPromotionGet(t *testing.T) {
+	result, err := app.JdUnionOpenShPromotionGet(map[string]interface{}{
+		"account":    "",
+		"materialId": "",
+		"taskId":     "",
 	})
 	if err != nil {
 		t.Error(err)
