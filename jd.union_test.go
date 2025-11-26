@@ -189,3 +189,27 @@ func TestJdUnionOpenShPromotionGet(t *testing.T) {
 	}
 	t.Log(result)
 }
+
+// 查询奖励订单
+func TestJdUnionOpenOrderBonusQuery(t *testing.T) {
+	result, err := app.JdUnionOpenOrderBonusQuery(map[string]interface{}{
+		"optType":   2,             // 1.下单时间拉取、2.更新时间拉取
+		"startTime": 1763976720000, // 订单开始时间，时间戳（毫秒）
+		"endTime":   1763976820000, // 订单结束时间，时间戳（毫秒），与startTime间隔不超过10秒
+		"pageNo":    1,             // 页码，默认值为1
+		"pageSize":  100,           // 每页数量，上限100
+		"sortValue": "",            // 第一页传空，后续页传入上一页最后一条记录的sortValue
+		// "activityId": 1,          // 奖励活动ID（可选）
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+	for _, item := range result.Data {
+		t.Logf("订单ID: %d, 商品名称: %s, 活动名称: %s",
+			item.OrderId,
+			item.SkuName,
+			item.ActivityName)
+	}
+}
