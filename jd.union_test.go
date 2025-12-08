@@ -213,3 +213,17 @@ func TestJdUnionOpenOrderBonusQuery(t *testing.T) {
 			item.ActivityName)
 	}
 }
+
+// 用户注册验证
+func TestJdUnionOpenUserRegisterValidate(t *testing.T) {
+	result, err := app.JdUnionOpenUserRegisterValidate(map[string]interface{}{
+		"userId":     "512E10A8817CA3F964523933210D0CC7", // 用户ID
+		"userIdType": 131072,                             // 用户ID类型，支持多种类型组合
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+	t.Logf("用户状态: %d", result.Data.UserResp.JdUser)
+}
