@@ -26,7 +26,7 @@ type JdUnionOpenUserRegisterValidateData struct {
 }
 
 type UserStateResp struct {
-	JdUser int64 `json:"jdUser"` // 1:实名不完整; 2:京东平台黑名单; 8:未授权; 16:未实名; 32:64位未授权; 64:128位未授权; 128:32768位未授权
+	JdUser int64 `json:"jdUser"` // 1：实时不满足要求，2：实时满足要求
 }
 
 func (app *App) JdUnionOpenUserRegisterValidate(params map[string]interface{}) (result *JdUnionOpenUserRegisterValidateResult, err error) {
